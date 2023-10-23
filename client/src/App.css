@@ -1,0 +1,63 @@
+.App {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  max-width: 650px;
+  margin: 0 auto;
+
+}
+
+.notes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 25px;
+}
+
+.note-card {
+  border: 2px #ccc solid;
+  border-radius: 8px;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.note-card .title {
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+  border-bottom: 2px #ccc solid;
+  padding: 10px 25px;
+}
+
+.note-card .content {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  margin-bottom: 10px;
+  margin-left: 25px;
+  margin-right: 25px;
+}
+
+.note-card .delete {
+  display: flex;
+  justify-content: flex-end;
+
+}
+
+.App .add {
+  border-style: dashed;
+  padding: 10px 25px;
+  border: 2px #ccc solid;
+  border-radius: 8px;
+  height: 100px;
+  width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-end;
+  margin-right: 60px;
+  margin-top: 16px;
+}
