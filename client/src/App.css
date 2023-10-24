@@ -3,9 +3,8 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  max-width: 650px;
+  max-width: 480px;
   margin: 0 auto;
-
 }
 
 .notes {
@@ -44,12 +43,11 @@
 .note-card .delete {
   display: flex;
   justify-content: flex-end;
-
+  margin-right: 8px;
 }
 
 .App .add {
   border-style: dashed;
-  padding: 10px 25px;
   border: 2px #ccc solid;
   border-radius: 8px;
   height: 100px;
@@ -57,7 +55,35 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  align-self: flex-end;
-  margin-right: 60px;
   margin-top: 16px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form input {
+  border: #ccc 1.3px solid;
+  border-radius: 5px;
+  padding: 16px;
+  outline: none;
+}
+
+.form button {
+  padding: 16px;
+  margin-top: 16px;
+  background: transparent;
+  border: #ccc 1.3px solid;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 17px;
+  font-weight: 600;
+  transition: all 0.5s ease-in;
+}
+
+.form button:hover {
+  background-color: #0044c0;
+  color: white;
 }

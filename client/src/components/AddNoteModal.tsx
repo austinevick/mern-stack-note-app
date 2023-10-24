@@ -3,6 +3,9 @@ import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
+import { apiClient } from '../services/api';
+import LoadingDialog from './LoadingDialog';
+import { useDialog } from '../hooks/useDialog';
 
 interface Props {
     open: boolean
@@ -18,14 +21,46 @@ const style = {
     bgcolor: 'background.paper',
     borderRadius: '8px',
     boxShadow: 24,
-    p: 4,
+    paddingTop: 2,
+    paddingBottom: 2,
+    paddingLeft: 4,
+    paddingRight: 4,
 };
 
 export default function AddNoteModal({ handleClose, open }: Props) {
+    const { openDialog, setOpen } = useDialog()
+    const [title, setTitle] = React.useState('')
+    const [content, setContent] = React.useState('')
 
+    const addNote = async () => {
+        try {
+            setOpen(true)
+            const response = await apiClient({
+                endpoint: 'note',
+                method: "POST", body: {
+                    'title': title,
+                    'content': content
+                }
+            })
+            if (response.status === 201) {
+                setOpen(false)
+                handleClose()
+                window.location.reload()
+            }
+            setOpen(false)
+        } catch (error) {
+            console.log(error);
+            setOpen(false)
+        }
+    }
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault()
+        addNote()
+    }
 
     return (
-        <div>
+        <div >
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -37,12 +72,26 @@ export default function AddNoteModal({ handleClose, open }: Props) {
                     }
                 }}>
                 <Fade in={open}>
-                    <Box sx={style}>
+                    <Box sx={style} >
                         <h3 > Add Note </h3>
-
+                        <form onSubmit={handleSubmit} className='form'>
+                            <input type="text"
+                                placeholder='Title'
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
+                            />
+                            <input type="text"
+                                placeholder='Content'
+                                value={content}
+                                onChange={(e) => setContent(e.target.value)}
+                            />
+                            <button> Submit</button>
+                        </form>
+                        <LoadingDialog open={openDialog} handleClose={() => setOpen(false)} />
                     </Box>
                 </Fade>
             </Modal>
         </div>
     );
 }
+

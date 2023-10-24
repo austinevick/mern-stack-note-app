@@ -30,10 +30,8 @@ export const useNote = () => {
                 setNotes(data.data)
             } catch (error) {
                 console.log(error);
-
             }
         }
-
         fetchNotes()
     }, [])
 

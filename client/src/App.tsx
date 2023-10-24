@@ -1,28 +1,27 @@
-import { useState } from 'react';
 import './App.css';
 import { IconButton } from '@mui/material';
 import { Add } from '@mui/icons-material';
 import AddNoteModal from './components/AddNoteModal';
 import { NoteList } from './components/NoteList';
+import { useDialog } from './hooks/useDialog';
+
 
 function App() {
-
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const { openDialog, setOpen } = useDialog()
 
   return (
     <div className="App">
       <NoteList />
-      <div className="add" onClick={handleOpen}>
+      <div className="add" onClick={() => setOpen(true)}>
         <IconButton >
           <Add sx={{
             fontSize: '50px'
           }} />
         </IconButton>
       </div>
-      <AddNoteModal handleClose={handleClose}
-        open={open} />
+      <AddNoteModal handleClose={() => setOpen(false)}
+        open={openDialog} />
+
     </div>
   );
 }
