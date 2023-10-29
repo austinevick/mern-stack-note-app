@@ -7,7 +7,7 @@ import { useDialog } from './hooks/useDialog';
 
 
 function App() {
-  const { openDialog, setOpen } = useDialog()
+  const { open, setOpen } = useDialog()
 
   return (
     <div className="App">
@@ -20,7 +20,7 @@ function App() {
         </IconButton>
       </div>
       <AddNoteModal handleClose={() => setOpen(false)}
-        open={openDialog} />
+        open={open} />
 
     </div>
   );

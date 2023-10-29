@@ -1,8 +1,8 @@
 import { useState } from "react"
 
 export const useDialog = () => {
-    const [openDialog, setOpen] = useState(false)
+    const [open, setOpen] = useState(false)
 
 
-    return { openDialog, setOpen }
+    return { open, setOpen }
 }

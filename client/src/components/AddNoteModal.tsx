@@ -3,9 +3,8 @@ import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
-import { apiClient } from '../services/api';
 import LoadingDialog from './LoadingDialog';
-import { useDialog } from '../hooks/useDialog';
+import { useNote } from '../context/NoteContext';
 
 interface Props {
     open: boolean
@@ -28,35 +27,14 @@ const style = {
 };
 
 export default function AddNoteModal({ handleClose, open }: Props) {
-    const { openDialog, setOpen } = useDialog()
+    const { addNote, open: openDialog, setOpen } = useNote()
     const [title, setTitle] = React.useState('')
     const [content, setContent] = React.useState('')
 
-    const addNote = async () => {
-        try {
-            setOpen(true)
-            const response = await apiClient({
-                endpoint: 'note',
-                method: "POST", body: {
-                    'title': title,
-                    'content': content
-                }
-            })
-            if (response.status === 201) {
-                setOpen(false)
-                handleClose()
-                window.location.reload()
-            }
-            setOpen(false)
-        } catch (error) {
-            console.log(error);
-            setOpen(false)
-        }
-    }
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        addNote()
+        addNote(title, content, handleClose)
     }
 
     return (
