@@ -21,7 +21,10 @@ export const NoteList = () => {
                 </div>
 
                 <div className="delete">
-                    <IconButton onClick={() => setOpen(true)}>
+                    <IconButton onClick={() => {
+                        deleteNote(e._id)
+                        // return setOpen(true)
+                    }}>
                         <Delete />
                     </IconButton>
                 </div>

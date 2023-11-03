@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  max-width: 480px;
+  width: 480px;
   margin: 0 auto;
 }
 
@@ -50,8 +50,8 @@
   border-style: dashed;
   border: 2px #ccc solid;
   border-radius: 8px;
-  height: 100px;
-  width: 200px;
+  height: 30px;
+  width: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -86,4 +86,23 @@
 .form button:hover {
   background-color: #0044c0;
   color: white;
+}
+
+.textfield {
+  margin-top: 25px;
+  border: #ccc solid 2px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  width: 100%;
+}
+
+.textfield input {
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  width: 100%;
+  font-size: 16px;
+  font-weight: 500;
 }

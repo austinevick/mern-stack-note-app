@@ -9,9 +9,12 @@ type NoteAppProviderProps = {
 type NoteContextProps = {
     notes: NoteData[]
     open: boolean
+    loading: boolean
     addNote: (title: string, content: string, handleClose: () => void) => void
     setOpen: React.Dispatch<React.SetStateAction<boolean>>
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
     deleteNote: (id: string) => void
+    updateNote: (id: string) => void
 }
 
 const NoteContext = createContext({} as NoteContextProps)
@@ -24,27 +27,28 @@ export function useNote() {
 export function NoteAppProvider({ children }: NoteAppProviderProps) {
     const [notes, setNotes] = useState<NoteData[]>([])
     const { open, setOpen } = useDialog()
+    const [loading, setIsLoading] = useState(false)
 
-    useEffect(() => {
-        const fetchNotes = async () => {
-            try {
-                const response = await apiClient({
-                    endpoint: 'note',
-                    method: 'GET'
-                })
-                const data: NoteResponse = await response.json()
-                console.log(data.data);
-                setNotes(data.data)
-            } catch (error) {
-                console.log(error);
-            }
+    const fetchNotes = async () => {
+        try {
+            const response = await apiClient({
+                endpoint: 'note',
+                method: 'GET'
+            })
+            const data: NoteResponse = await response.json()
+            console.log(data.data);
+            setNotes(data.data)
+        } catch (error) {
+            console.log(error);
         }
+    }
+    useEffect(() => {
         fetchNotes()
     }, [])
 
     const addNote = async (title: string, content: string, handleClose: () => void) => {
         try {
-            setOpen(true)
+            setIsLoading(true)
             const response = await apiClient({
                 endpoint: 'note',
                 method: "POST", body: {
@@ -53,38 +57,44 @@ export function NoteAppProvider({ children }: NoteAppProviderProps) {
                 }
             })
             if (response.status === 201) {
-                setOpen(false)
+                setIsLoading(false)
                 handleClose()
                 window.location.reload()
             }
-            setOpen(false)
+            setIsLoading(false)
         } catch (error) {
             console.log(error);
-            setOpen(false)
+            setIsLoading(false)
         }
     }
 
 
     const deleteNote = async (id: string) => {
+
         try {
             const response = await apiClient({ endpoint: `note/${id}`, method: 'DELETE' })
             if (response.status === 200) {
-                window.location.reload()
+                fetchNotes()
             }
             setOpen(false)
         } catch (error) {
             console.log(error);
         }
     }
+    async function updateNote(id: string) {
 
+    }
 
 
     return <NoteContext.Provider value={{
         notes,
         open,
+        loading,
+        setIsLoading,
         addNote,
         setOpen,
-        deleteNote
+        deleteNote,
+        updateNote
     }}>
         {children}</NoteContext.Provider>
 }

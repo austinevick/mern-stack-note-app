@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:mobile/main.data.dart';
+import 'package:mobile/screen/home_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ProviderScope(
+    overrides: [configureRepositoryLocalStorage()],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -15,6 +21,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
         useMaterial3: true,
       ),
+      home: const HomeScreen(),
     );
   }
 }

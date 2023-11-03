@@ -3,8 +3,8 @@ import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
-import LoadingDialog from './LoadingDialog';
 import { useNote } from '../context/NoteContext';
+import { Spinner } from './spinner/Spinner';
 
 interface Props {
     open: boolean
@@ -18,6 +18,7 @@ const style = {
     transform: 'translate(-50%, -50%)',
     width: 400,
     bgcolor: 'background.paper',
+    border: 'none',
     borderRadius: '8px',
     boxShadow: 24,
     paddingTop: 2,
@@ -27,7 +28,7 @@ const style = {
 };
 
 export default function AddNoteModal({ handleClose, open }: Props) {
-    const { addNote, open: openDialog, setOpen } = useNote()
+    const { addNote, loading } = useNote()
     const [title, setTitle] = React.useState('')
     const [content, setContent] = React.useState('')
 
@@ -63,9 +64,8 @@ export default function AddNoteModal({ handleClose, open }: Props) {
                                 value={content}
                                 onChange={(e) => setContent(e.target.value)}
                             />
-                            <button> Submit</button>
+                            <button>{loading ? <Spinner /> : 'Submit'}</button>
                         </form>
-                        <LoadingDialog open={openDialog} handleClose={() => setOpen(false)} />
                     </Box>
                 </Fade>
             </Modal>
